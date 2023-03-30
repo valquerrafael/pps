@@ -33,7 +33,7 @@ public class Cliente {
             Aluguel cada = alugueis.next();
 
             // determina valores para cada linha
-            switch(cada.getDVD().getCódigoDePreço()) {
+            switch(cada.getDVD().getCodigoDePreco()) {
                 case DVD.NORMAL: // R$ 2.00 por 2 dias. O dia adicional acrescenta R$ 1.50
                     valorCorrente += 2.0;
                     if(cada.getDiasAlugado() > 2) {
@@ -41,7 +41,7 @@ public class Cliente {
                     }
                     break;
 
-                case DVD.LANÇAMENTO: // R$ 3.00 por dia
+                case DVD.LANCAMENTO: // R$ 3.00 por dia
                     valorCorrente += cada.getDiasAlugado() * 3.00;
                     break;
 
@@ -57,13 +57,13 @@ public class Cliente {
             // trata de pontos de alugador frequente
             pontosDeAlugadorFrequente++;
             // adiciona bonus para aluguel de um lançamento por pelo menos 2 dias
-            if(cada.getDVD().getCódigoDePreço() == DVD.LANÇAMENTO &&
+            if(cada.getDVD().getCodigoDePreco() == DVD.LANCAMENTO &&
                     cada.getDiasAlugado() > 1) {
                 pontosDeAlugadorFrequente++;
             }
 
             // mostra valores para este aluguel
-            resultado += "\t" + cada.getDVD().getTítulo() + "\t R$ " + valorCorrente + fimDeLinha;
+            resultado += "\t" + cada.getDVD().getTitulo() + "\t R$ " + valorCorrente + fimDeLinha;
             valorTotal += valorCorrente;
 
         } // while

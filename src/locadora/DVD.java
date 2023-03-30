@@ -2,26 +2,26 @@ package locadora;
 
 public class DVD {
     public static final int NORMAL = 0;
-    public static final int LANÇAMENTO = 1;
+    public static final int LANCAMENTO = 1;
     public static final int INFANTIL = 2;
 
-    private String título;
-    private int códigoDePreço;
+    private String titulo;
+    private int codigoDePreco;
 
-    public DVD(String título, int códigoDePreço) {
-        this.título = título;
-        this.códigoDePreço = códigoDePreço;
+    public DVD(String titulo, int codigoDePreco) {
+        this.titulo = titulo;
+        this.codigoDePreco = codigoDePreco;
     }
 
-    public String getTítulo() {
-        return título;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public int getCódigoDePreço() {
-        return códigoDePreço;
+    public int getCodigoDePreco() {
+        return codigoDePreco;
     }
 
-    public void setCódigoDePreço(int códigoDePreço) {
-        this.códigoDePreço = códigoDePreço;
+    public void setCodigoDePreco(int codigoDePreco) {
+        this.codigoDePreco = codigoDePreco;
     }
 }
