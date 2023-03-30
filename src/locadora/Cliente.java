@@ -29,51 +29,64 @@ public class Cliente {
         String resultado = "Registro de Alugueis de " + getNome() + fimDeLinha;
 
         while(alugueis.hasNext()) {
-            double valorCorrente = 0.0;
-            Aluguel cada = alugueis.next();
+            Aluguel aluguel = alugueis.next();
+            double valorCorrente = this.valorDeAluguel(aluguel);
+            pontosDeAlugadorFrequente += this.pontosDeAlugadorFrequente(aluguel);
 
-            // determina valores para cada linha
-            switch(cada.getDVD().getCodigoDePreco()) {
-                case DVD.NORMAL: // R$ 2.00 por 2 dias. O dia adicional acrescenta R$ 1.50
-                    valorCorrente += 2.0;
-                    if(cada.getDiasAlugado() > 2) {
-                        valorCorrente += (cada.getDiasAlugado() - 2) * 1.5;
-                    }
-                    break;
-
-                case DVD.LANCAMENTO: // R$ 3.00 por dia
-                    valorCorrente += cada.getDiasAlugado() * 3.00;
-                    break;
-
-                case DVD.INFANTIL: // R$ 1.50 por 3 dias. O dia adicional acrescenta R$ 1.50
-                    valorCorrente += 1.5;
-
-                    if(cada.getDiasAlugado() > 3) {
-                        valorCorrente += (cada.getDiasAlugado() - 3) * 1.5;
-                    }
-                    break;
-            } //switch
-
-            // trata de pontos de alugador frequente
-            pontosDeAlugadorFrequente++;
-            // adiciona bonus para aluguel de um lançamento por pelo menos 2 dias
-            if(cada.getDVD().getCodigoDePreco() == DVD.LANCAMENTO &&
-                    cada.getDiasAlugado() > 1) {
-                pontosDeAlugadorFrequente++;
-            }
-
-            // mostra valores para este aluguel
-            resultado += "\t" + cada.getDVD().getTitulo() + "\t R$ " + valorCorrente + fimDeLinha;
+            resultado += this.extratoAluguel(aluguel);
             valorTotal += valorCorrente;
+        }
 
-        } // while
-
-        // adiciona rodapé
-        resultado += "Valor total pago: R$ " + valorTotal + fimDeLinha;
-        resultado += "Voce acumulou " + pontosDeAlugadorFrequente +
-                " pontos de alugador frequente";
+        resultado += this.extratoTotal(valorTotal, pontosDeAlugadorFrequente);
 
         return resultado;
     }
 
+    private double valorDeAluguel(Aluguel aluguel) {
+        double valor = 0;
+
+        switch (aluguel.getDVD().getCodigoDePreco()) {
+            case DVD.NORMAL -> {
+                valor += 2.0;
+                if (aluguel.getDiasAlugado() > 2) {
+                    valor += (aluguel.getDiasAlugado() - 2) * 1.5;
+                }
+            }
+            case DVD.LANCAMENTO -> valor += aluguel.getDiasAlugado() * 3.00;
+            case DVD.INFANTIL -> {
+                valor += 1.5;
+                if (aluguel.getDiasAlugado() > 3) {
+                    valor += (aluguel.getDiasAlugado() - 3) * 1.5;
+                }
+            }
+        }
+
+        return valor;
+    }
+
+    private int pontosDeAlugadorFrequente(Aluguel aluguel) {
+        int paf = 1;
+
+        if (
+            aluguel.getDVD().getCodigoDePreco() == DVD.LANCAMENTO &&
+            aluguel.getDiasAlugado() > 1
+        )
+            paf++;
+
+        return paf;
+    }
+
+    private String extratoAluguel(Aluguel aluguel) {
+        final String fimDeLinha = System.getProperty("line.separator");
+
+        return "\t" + aluguel.getDVD().getTitulo() + "\t R$ " + this.valorDeAluguel(aluguel) + fimDeLinha;
+    }
+
+    private String extratoTotal(double valorTotal, int pontosDeAlugadorFrequente) {
+        final String fimDeLinha = System.getProperty("line.separator");
+
+        return "Valor total pago: R$ " + valorTotal + fimDeLinha +
+                " Voce acumulou " + pontosDeAlugadorFrequente +
+                " pontos de alugador frequente";
+    }
 }
