@@ -1,39 +1,34 @@
-package locadora;
+package locadora.Alugavel;
 
-public class DVD implements Alugavel {
-    public static final int NORMAL = 0;
-    public static final int LANCAMENTO = 1;
-    public static final int INFANTIL = 2;
-
+public class Game implements Alugavel {
     private String titulo;
 
     private Classificacao classificacao;
 
-    public DVD(String titulo, int codigoDePreco) {
+    public Game(String titulo, int codigoDePreco) {
         this.titulo = titulo;
         this.setCodigoDePreco(codigoDePreco);
     }
 
+    @Override
     public String getTitulo() {
         return this.titulo;
-    }
-
-    public int getCodigoDePreco() {
-        return this.classificacao.getCodigoDePreco();
     }
 
     public void setCodigoDePreco(int codigoDePreco) {
         switch (codigoDePreco) {
             case 0 -> this.classificacao = new ClassificacaoNormal();
             case 1 -> this.classificacao = new ClassificacaoLancamento();
-            case 2 -> this.classificacao = new ClassificacaoInfantil();
+            case 2 -> this.classificacao = new ClassificacaoOnline();
         }
     }
 
+    @Override
     public double getValorDoAluguel(int diasAlugado) {
         return this.classificacao.getValorDoAluguel(diasAlugado);
     }
 
+    @Override
     public int getPontosDeAlugadorFrequente(int diasAlugado) {
         return this.classificacao.getPontosDeAlugadorFrequente(diasAlugado);
     }

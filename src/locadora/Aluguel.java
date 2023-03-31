@@ -1,5 +1,7 @@
 package locadora;
 
+import locadora.Alugavel.Alugavel;
+
 public class Aluguel {
     private Alugavel alugavel;
     private int diasAlugado;
@@ -11,10 +13,6 @@ public class Aluguel {
 
     public Alugavel getAlugavel() {
         return this.alugavel;
-    }
-
-    public int getDiasAlugado() {
-        return this.diasAlugado;
     }
 
     public double getValorDeAluguel() {

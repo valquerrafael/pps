@@ -1,4 +1,4 @@
-package locadora;
+package locadora.Alugavel;
 
 public interface Alugavel {
 

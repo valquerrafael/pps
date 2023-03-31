@@ -1,14 +1,16 @@
-package locadora;
+package locadora.Alugavel;
+
+import locadora.Alugavel.Classificacao;
 
 public class ClassificacaoNormal extends Classificacao {
 
     @Override
-    int getCodigoDePreco() {
-        return 0;
+    public int getCodigoDePreco() {
+        return Classificacao.NORMAL;
     }
 
     @Override
-    double getValorDoAluguel(int diasAlugado) {
+    public double getValorDoAluguel(int diasAlugado) {
         double valor = 2.0;
 
         if (diasAlugado > 2) {
