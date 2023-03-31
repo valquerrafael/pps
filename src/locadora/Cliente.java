@@ -13,11 +13,11 @@ public class Cliente {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
 
     public void adicionaAluguel(Aluguel aluguel) {
-        dvdsAlugados.add(aluguel);
+        this.dvdsAlugados.add(aluguel);
     }
 
     public String extrato() {
@@ -28,27 +28,34 @@ public class Cliente {
 
         while(alugueis.hasNext()) {
             Aluguel aluguel = alugueis.next();
-
-            extrato += this.extratoAluguel(aluguel);
+            extrato += "\t" + aluguel.getAlugavel().getTitulo() + "\t R$ " + aluguel.getValorDeAluguel() + fimDeLinha;
         }
 
-        extrato += this.extratoTotal(this.getValorTotal(), this.getPontosTotaisDeAlugadorFrequente());
+        extrato += "Valor total pago: R$ " + this.getValorTotal() + fimDeLinha +
+                    " Voce acumulou " + this.getPontosTotaisDeAlugadorFrequente() +
+                    " pontos de alugador frequente";
 
         return extrato;
     }
 
-    private String extratoAluguel(Aluguel aluguel) {
+    public String extratoHTML() {
         final String fimDeLinha = System.getProperty("line.separator");
 
-        return "\t" + aluguel.getDVD().getTitulo() + "\t R$ " + aluguel.getValorDeAluguel() + fimDeLinha;
-    }
+        Iterator<Aluguel> alugueis = dvdsAlugados.iterator();
+        String resultado = "<H1>Registro de Alugueis de <EM>" + getNome() + "</EM></H1><P>" + fimDeLinha;
 
-    private String extratoTotal(double valorTotal, int pontosDeAlugadorFrequente) {
-        final String fimDeLinha = System.getProperty("line.separator");
+        while (alugueis.hasNext()) {
+            Aluguel cada = alugueis.next();
+            resultado += cada.getAlugavel().getTitulo() + ": R$ " +
+                    cada.getValorDeAluguel() + "<BR>"+ fimDeLinha;
+        }
 
-        return "Valor total pago: R$ " + valorTotal + fimDeLinha +
-                " Voce acumulou " + pontosDeAlugadorFrequente +
-                " pontos de alugador frequente";
+        resultado += "<P>Valor total pago: <EM>R$ " + getValorTotal() +
+                "</EM>"+ fimDeLinha + "<P>Voce acumulou <EM>" +
+                getPontosTotaisDeAlugadorFrequente() +
+                " pontos </EM> de alugador frequente";
+
+        return resultado;
     }
 
     private double getValorTotal() {
